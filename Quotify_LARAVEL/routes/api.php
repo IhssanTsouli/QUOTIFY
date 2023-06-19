@@ -27,3 +27,5 @@ Route::get('countfavorite',[QuoteController::class,'countfavorite'])->name('coun
 Route::post('/login', [AuthController::class,'login']);
 Route::post('/register',[AuthController::class,'register']);
 Route::post('logout',[AuthController::class,'logout']);
+
+Route::get('GetFvaorite',[QuoteController::class,'GetFvaorite'])->name('GetFvaorite');

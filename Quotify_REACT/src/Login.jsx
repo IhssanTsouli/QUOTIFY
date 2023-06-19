@@ -36,32 +36,32 @@ function Login() {
                             <div class="col-md-6">
                                 <div class="form-wrap bg-white">
                                     <h4 class="btm-sep pb-3 mb-5">Login</h4>
-                                    <form class="form" method="post" action="#">
+                                    {/* <form class="form" method="post"> */}
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="form-group position-relative">
                                                     <span class="zmdi zmdi-account"></span>
-                                                    <input type="email" id="email" class="form-control" placeholder="Email Address"/>
+                                                    <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} class="form-control" placeholder="Email Address"/>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="form-group position-relative">
                                                     <span class="zmdi zmdi-email"></span>
-                                                    <input type="password" id="password" class="form-control" placeholder="Password"/>
+                                                    <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} class="form-control" placeholder="Password"/>
                                                 </div>
                                             </div>
                                             <div class="col-12 text-lg-right">
                                                 <a href="#" class="c-black">Forgot password ?</a>
                                             </div>
                                             <div class="col-12 mt-30">
-                                                <button type="submit" id="submit" class="btn btn-lg btn-custom btn-dark btn-block">Sign In
+                                                <button type="submit" id="submit" onClick={handellogin} class="btn btn-lg btn-custom btn-dark btn-block">Sign In
                                                 </button>
                                             </div>
                                         </div>
-                                    </form>
+                                    {/* </form> */}
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            {/* <div class="col-md-6">
                                 <div class="content text-center">
                                     <div class="border-bottom pb-5 mb-5">
                                         <h3 class="c-black">First time here?</h3>
@@ -75,7 +75,7 @@ function Login() {
                                         <a href="#" class="zmdi zmdi-instagram"></a>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

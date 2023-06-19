@@ -15,13 +15,19 @@ function Home() {
   const [author, setAuthor] = useState("");
   const [datafavorite, setdatafavorite] = useState([]);
   const [isStarted, setIsStarted] = useState(false);
+  const [id, setId] = useState("");
+  const [user, setUser] = useState("");
+  
+
 
   useEffect(() => {
     fetch("http://api.quotable.io/random")
       .then(res => res.json())
       .then((quote) => {
+        console.log(quote);
         setQuote(quote.content);  
         setAuthor(quote.author);
+        setId(quote._id);
       });
 
     getData();
@@ -35,15 +41,22 @@ function Home() {
       });
   };
 
-  const addquote = (quote) => {
+  const addquote = (quote,id) => {
   const user = datafavorite.find((user) => user.quote === quote);
 
   if (!user) {
-    setIsStarted(true);  // set isStarted to true before making the request
+    setIsStarted(true);
+    let user=JSON.parse(localStorage.getItem('user-info'));
+      // console.log(user.data.token.id);
+      let quote_id=id;
+      let User_id=user.data.user.id;  // set isStarted to true before making the request
     axios.post(`http://127.0.0.1:8000/api/ajouter`, {
       quote,
       author,
     }).then(() => {
+        axios.post(`http://127.0.0.1:8000/api/GetFvaorite`,{
+           quote_id,User_id
+        })
       getData();
     });
   } else {
@@ -83,13 +96,13 @@ function Home() {
             </form>
           </div>
         </div>
-        <ul>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/registre">Registre</Link>
-          </li>
+        <ul style={{ listStyle: 'none', padding: 0, display: 'flex' }}>
+        <li style={{ marginRight: '10px' }}>
+        <Link to="/login">Login</Link>
+        </li>
+        <li style={{ marginRight: '10px' }}>
+        <Link to="/registre">Registre</Link>
+        </li>
         </ul>
       </nav>
       
@@ -100,7 +113,7 @@ function Home() {
         </div><br/>
 
         <div className="btnf"> 
-          <button id='btnstar' class="btn waves-effect" onClick={() => {addquote(quote);}}>
+          <button id='btnstar' class="btn waves-effect" onClick={() => {addquote(quote,id);}}>
   {Starticon(quote) ? <FaStar style={{color: 'ffd905',fontSize: '24px'}} />: <FaStar style={{color: '30474f',fontSize: '24px'}} />}
           </button>
          
