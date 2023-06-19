@@ -20,6 +20,9 @@ class QuoteController extends Controller
         $favorite=Quote::all();
         return $favorite->count();
     }
+    // public function GetFvaorite(){
+
+    // }
     /**
      * Show the form for creating a new resource.
      *

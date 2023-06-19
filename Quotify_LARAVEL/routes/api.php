@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\QuoteController;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +23,7 @@ Route::post('ajouter',[QuoteController::class,'store'])->name('ajouter');
 Route::get('index',[QuoteController::class,'index'])->name('index');
 Route::delete('destroy/{id}',[QuoteController::class,'destroy'])->name('destroy');
 Route::get('countfavorite',[QuoteController::class,'countfavorite'])->name('countfavorite');
+
+Route::post('/login', [AuthController::class,'login']);
+Route::post('/register',[AuthController::class,'register']);
+Route::post('logout',[AuthController::class,'logout']);
