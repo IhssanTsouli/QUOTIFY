@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300&family=Tajawal:wght@200;400;500;700;800&display=swap');
+
+
+.App {
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    align-items: center;
+    flex-direction: column;
+}
+.quote {
+    background: url(./assets/quote.png);
+    background-size: cover;
+    width: 500px;
+    height:400px;
+    padding: 50px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.quote h2 {
+    font-size: 1.6em;
+    font-family: 'Cormorant Upright', serif;
+
+}
+.quote small {
+    font-size: 1em;
+    font-family: 'Tajawal', sans-serif;
+
+}
+.btn {
+	display: block;
+	border: 2px solid #ffd905;
+	background: transparent;
+	padding: 10px 15px;
+	color: #44606a;
+	font-size: 15px;
+	border-radius: 5px;
+	cursor: pointer;
+	outline: none;
+	transition: background 1s, color 1s;
+    margin: 10px;
+}
+.btn:hover{
+	background: #ffd905;
+	color: #2f4951;
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.btnf{
+    display: flex;
+
+}
+.quotef{
+    font-size: 18px;
+    font-family: 'Cormorant Upright', serif;
+
+}
+.authorf{
+    font-size: 14px;
+    font-family: 'Tajawal', sans-serif;
+}
+.offcanvas-title{
+    font-style: 'ffd905';
+    font-size: 35px;
+    font-family: 'Cormorant Upright', serif;
+
+}
+#btnstar{
+    border: 0px;
+    display: block;
+	background: transparent;
+	padding: 10px 15px;
+	color: #30474f;
+	font-size: 15px;
+	border-radius: 5px;
+	cursor: pointer;
+	outline: none;
+	transition: background 1s, color 1s;
+    margin: 10px;
+}
+
