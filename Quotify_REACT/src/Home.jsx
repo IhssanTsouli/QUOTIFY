@@ -11,64 +11,94 @@ import { FaStar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 function Home() {
-  const [quote, setQuote] = useState("");
+  const [quotes, setQuotes] = useState("");
   const [author, setAuthor] = useState("");
   const [datafavorite, setdatafavorite] = useState([]);
   const [isStarted, setIsStarted] = useState(false);
   const [id, setId] = useState("");
-  const [user, setUser] = useState("");
+  const [iduserT,setIduserT]=useState('');
   
 
 
   useEffect(() => {
+    //afficher quote
     fetch("http://api.quotable.io/random")
       .then(res => res.json())
       .then((quote) => {
         console.log(quote);
-        setQuote(quote.content);  
+        setQuotes(quote.content);
         setAuthor(quote.author);
         setId(quote._id);
       });
+      if(localStorage.getItem('user-info')){
+        let usere=JSON.parse(localStorage.getItem('user-info'));
+        setIduserT(usere.data.user.id);
+        getData(usere.data.user.id);
+        }
 
-    getData();
-  }, []);
+    
+  }, [iduserT]);
+//get list favorite
+  const getData = (iduserT) => {
+    try{
 
-  const getData = () => {
-    axios.get(`http://127.0.0.1:8000/api/index`)
-      .then((res) => {
-        console.log(res.data);
-        setdatafavorite(res.data);
-      });
+      let user = JSON.parse(localStorage.getItem('user-info'));
+      if (iduserT != "") {
+        let User_id = user.data.user.id;
+        console.log("mmm");
+        axios.get(`http://127.0.0.1:8000/api/index?User_id=${User_id}`)
+        .then((res) => {
+          console.log(res.data);
+          setdatafavorite(res.data);
+        });
+  
+      }
+    }
+    catch{
+
+      alert("Login");
+    }
+    
+    
   };
 
-  const addquote = (quote,id) => {
-  const user = datafavorite.find((user) => user.quote === quote);
+//add qoute favorite 
+  const addquote = (quote) => {
+    const user = datafavorite.find((user) => user.quote === quote);
+    try{
 
-  if (!user) {
-    setIsStarted(true);
-    let user=JSON.parse(localStorage.getItem('user-info'));
-      // console.log(user.data.token.id);
-      let quote_id=id;
-      let User_id=user.data.user.id;  // set isStarted to true before making the request
-    axios.post(`http://127.0.0.1:8000/api/ajouter`, {
-      quote,
-      author,
-    }).then(() => {
-        axios.post(`http://127.0.0.1:8000/api/GetFvaorite`,{
-           quote_id,User_id
-        })
-      getData();
-    });
-  } else {
-    alert('This quote is already in your favorites.');
-  }
-};
+      if (!user) {
+        let user = JSON.parse(localStorage.getItem('user-info'));
+        // console.log(user.data.token.id);
+        let User_id = user.data.user.id;  // set isStarted to true before making the request
+        console.log("mmmmmm",User_id);
+        axios.post(`http://127.0.0.1:8000/api/ajouter`, 
+        {
+          quote,
+          author,
+          User_id
+        }
+        ).then(() => {
+          getData();
+        });
+      } else {
+        alert('This quote is already in your favorites.');
+      }
+    }
+    catch{
+      alert("Authentification");
+    }
+  };
+
+function handellogout(){
+  localStorage.clear();
+}
 
   const fetchNewQuote = () => {
     fetch("http://api.quotable.io/random")
       .then(res => res.json())
       .then((quote) => {
-        setQuote(quote.content);  
+        setQuotes(quote.content);  
         setAuthor(quote.author);
       });
   };
@@ -81,7 +111,7 @@ function Home() {
   };
   const Starticon = (item) => {
     console.log(item);
-    return datafavorite.some((fav)=>fav.quote === quote);
+    return datafavorite.some((fav)=>fav.quote === quotes);
   }
 
   return (
@@ -103,18 +133,21 @@ function Home() {
         <li style={{ marginRight: '10px' }}>
         <Link to="/registre">Registre</Link>
         </li>
+        <li style={{ marginRight: '10px' }}>
+        <Link to="/" onClick={handellogout}>Logout</Link>
+        </li>
         </ul>
       </nav>
       
       <div className="App">
         <div className="quote">
-          <h2>{quote}</h2>
+          <h2>{quotes}</h2>
           <small>- {author} -</small>
         </div><br/>
 
         <div className="btnf"> 
-          <button id='btnstar' class="btn waves-effect" onClick={() => {addquote(quote,id);}}>
-  {Starticon(quote) ? <FaStar style={{color: 'ffd905',fontSize: '24px'}} />: <FaStar style={{color: '30474f',fontSize: '24px'}} />}
+          <button id='btnstar' class="btn waves-effect" onClick={() => {addquote(quotes);}}>
+  {Starticon(quotes) ? <FaStar style={{color: 'ffd905',fontSize: '24px'}} />: <FaStar style={{color: '30474f',fontSize: '24px'}} />}
           </button>
          
           <button className="btn" onClick={fetchNewQuote}>Generate New Quote</button>

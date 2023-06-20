@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Favorite;
 use App\Models\Quote;
 
 use Illuminate\Http\Request;
@@ -14,23 +13,15 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Quote::all();
+        return Quote::where('User_id', $request->User_id)->get();
     }
     public function countfavorite(){
         $favorite=Quote::all();
         return $favorite->count();
     }
-    public function GetFvaorite(Request $request){
-        $listfavorite=Favorite::join('quotes','quotes.id','=','fovorites.quote_id')
-        ->join('users','users.id', '=', 'fovorites.User_id')
-        ->where('fovorites.User_id',$request->iduser)
-        ->select(['fovorites.id AS fvid','fovorites.quote_id','fovorites.User_id',
-        'quotes.quote','quotes.author','users.name','users.id','users.email','users.password'])
-        ->get();
-        return $listfavorite;
-    }
+   
     /**
      * Show the form for creating a new resource.
      *
@@ -52,6 +43,7 @@ class QuoteController extends Controller
         $favorite=new Quote();
         $favorite->quote=$request->input('quote');
         $favorite->author=$request->input('author');
+        $favorite->User_id=$request->input('User_id');
         $favorite->save();
         return $favorite;
     }

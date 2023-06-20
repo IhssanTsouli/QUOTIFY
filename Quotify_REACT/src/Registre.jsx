@@ -33,7 +33,7 @@ async function handelRegistre(){
         setName("");
         setEmail("");
         setPassword("");
-        navigate('/');
+        navigate('/login');
       } 
     }catch(error) {
         alert('email déja existe');
